@@ -1,0 +1,37 @@
+# Data, results, figures are placeholders — populated locally, not committed
+data/*
+!data/README.md
+results/*
+!results/README.md
+figures/*
+!figures/.gitkeep
+
+# Model checkpoints
+*.pth
+*.pt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+build/
+dist/
+*.egg-info/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+venvs/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Editors & agents
+.vscode/
+.idea/
+.claude/
+.DS_Store

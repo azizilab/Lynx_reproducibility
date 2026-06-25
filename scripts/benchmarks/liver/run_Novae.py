@@ -1,0 +1,133 @@
+# %%
+import os
+import gc
+import sys
+import time
+
+import numpy as np
+import pandas as pd
+import scanpy as sc
+
+sys.path.append('../../')
+sys.path.append('../../util/')
+
+# --- LYNX reproducibility: central paths (see repo-root paths.py) ------------
+import os as _os, sys as _sys
+try:
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+except NameError:  # interactive / jupytext: __file__ undefined
+    _d = _os.getcwd()
+while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "paths.py")):
+    _d = _os.path.dirname(_d)
+if _d not in _sys.path:
+    _sys.path.insert(0, _d)
+from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
+# NOTE: competitor imports below assume the original liver3d checkout layout /
+# the method's venv (see benchmarks/README.md); not re-run in this repo.
+# -----------------------------------------------------------------------------
+import IO
+
+import novae
+%load_ext autoreload
+%autoreload 2
+
+
+# %%
+# Load data
+xenium_path = DATA_DIR + '/xenium/'
+desi_path = '../..//data/desi/'
+sample_id = 'NIH_F5_proseg'
+n_zones = 4
+
+adata_xenium = IO.load_xenium(os.path.join(xenium_path, sample_id), load_img=False)
+adata_desi = sc.read_h5ad(os.path.join(desi_path, sample_id+'.h5'))
+
+# Filtered Xenium data with aligned DESI for benchmarking fairness
+adata, _ = IO.filter_cells(adata_xenium, adata_desi, by='map') 
+
+# %%
+# Train novae model
+# Build spatial graph
+novae.utils.spatial_neighbors(adata, radius=50)
+model = novae.Novae.from_pretrained("MICS-Lab/novae-human-0")
+
+# %%
+# Version 1: zero-shot inference
+model.compute_representations(adata, accelerator="gpu")
+model.assign_domains(adata, level=n_zones)
+latent = adata.obsm['novae_latent']
+clusters = adata.obs[f'novae_domains_{n_zones}'].values
+np.save(RESULTS_DIR + '/liver/Novae_xenium_zero_shot_latent.npy', latent)
+gc.collect()
+
+# %%
+# Version 2: fine-tuning
+t0 = time.perf_counter()
+model.fine_tune(adata, accelerator="gpu")
+model.compute_representations(adata, accelerator="gpu")
+t1 = time.perf_counter()
+
+with open(os.path.join(RESULTS_DIR + "/liver/runtime.txt"), 'a') as f:
+    f.write(f'Novae training time (s): {t1 - t0:.2f}\n')
+
+model.assign_domains(adata, level=n_zones)
+latent = adata.obsm['novae_latent']
+clusters = adata.obs[f'novae_domains_{n_zones}'].values
+np.save(RESULTS_DIR + '/liver/Novae_xenium_latent.npy', latent)
+
+
+# %%
+# ---------------------------------------------------------------------------
+#   Visualize the inferred spatial domains from Novae
+# ---------------------------------------------------------------------------
+import matplotlib.pyplot as plt
+
+domain_key = f'novae_domains_{n_zones}'
+
+ax = sc.pl.embedding(
+    adata,
+    basis='spatial',
+    color=domain_key,
+    size=20,
+    show=False,
+)
+ax.set_aspect('equal')        # squidpy uses equal aspect
+ax.invert_yaxis()             # match squidpy's top-left origin orientation
+ax.set_xlabel('spatial1')
+ax.set_ylabel('spatial2')
+ax.set_title('Novae inferred spatial domains')
+plt.show()
+
+# %%
+# ---------------------------------------------------------------------------
+#   Spatially variable genes (SVGs) found by Novae
+# ---------------------------------------------------------------------------
+sc.pp.normalize_total(adata, target_sum=1e4)
+sc.pp.log1p(adata)
+
+top_svgs = novae.plot.spatially_variable_genes(
+    adata,
+    obs_key=domain_key,
+    top_k=10,
+    return_list=True,
+)
+print(f'Top-10 Novae SVGs: {top_svgs}')
+
+# Visualize the SVGs over the spatial coordinates
+axes = sc.pl.embedding(
+    adata,
+    basis='spatial',
+    color=top_svgs,
+    size=20,
+    ncols=5,
+    show=False,
+)
+for ax in np.atleast_1d(axes):
+    ax.set_aspect('equal')
+    ax.invert_yaxis()
+    ax.set_xlabel('spatial1')
+    ax.set_ylabel('spatial2')
+plt.tight_layout()
+plt.show()
+
+# %%

@@ -1,0 +1,61 @@
+# Conda environment for the LYNX reproducibility repo (preferred install track).
+# Identical to the LYNX package environment; the `pip install -e .` step below
+# must target a *pinned editable checkout* of azizilab/liver3d (commit 7090ff6)
+# so the `lynx` shim can resolve its models/ & util/ modules (see README).
+#
+#   conda env create -f environment.yml
+#   conda activate lynx
+#   # PyTorch Geometric companion wheels must match torch 2.3.1 + your CUDA:
+#   pip install torch-sparse==0.6.18 torch-scatter==2.1.2 torch-geometric==2.6.1 \
+#       -f https://data.pyg.org/whl/torch-2.3.1+cu121.html
+#   pip install scFates==1.0.8 --no-deps   # stale pins; install out of resolver
+#   pip install -e .            # installs the `lynx` package + remaining pip deps
+#
+# Python is pinned to 3.9.5 to match the reference environment.
+name: lynx
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.9.5
+  - pip
+  - pytorch=2.3.1
+  - torchvision=0.18.1
+  - pytorch-cuda=12.1
+  - numpy>=1.23.5,<2.0
+  - pandas>=2.1.0
+  - scipy>=1.9.0
+  - scikit-learn=1.3.2
+  - scikit-image=0.22.0
+  - matplotlib=3.9.4
+  - seaborn=0.13.0
+  - networkx=3.2.1
+  - statsmodels=0.14.1
+  - tifffile=2023.9.26
+  - pip:
+      - scanpy>=1.10.1
+      - squidpy==1.6.1
+      # scFates has stale pins conflicting with squidpy; install separately with
+      # --no-deps (see header). Its genuine runtime deps are listed here:
+      - elpigraph-python==0.3.1
+      - simpleppt==1.1.4
+      - plotly==5.22.0
+      - adjustText==0.7.3
+      - scikit-misc==0.3.1
+      - python-igraph
+      - pyro-ppl==1.9.1
+      - jenkspy==0.4.1
+      - ml-collections==0.1.1
+      - py-pcha==0.1.3
+      - opencv-contrib-python==4.9.0.80
+      - opencv-python-headless==4.9.0.80
+      - torchrl==0.4.0
+      - lightning==2.1.4
+      - ipython==8.18.1
+      - tqdm==4.66.1
+      - wandb==0.19.8
+      # Notebook tooling for the reproducibility notebooks / percent-scripts
+      - jupyterlab
+      - notebook
+      - jupytext

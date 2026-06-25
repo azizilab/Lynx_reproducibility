@@ -1,0 +1,32 @@
+# Reproducibility environment for LYNX
+# ============================================================================
+# This repo holds the analysis scripts/notebooks only. The LYNX implementation
+# (model + util code) is pulled in by installing the pinned source checkout:
+#
+#   git clone https://github.com/azizilab/liver3d.git
+#   cd liver3d && git checkout 7090ff6           # pinned commit
+#   pip install -e .                             # EDITABLE install (see note)
+#   pip install scFates==1.0.8 --no-deps         # stale pins; install out of resolver
+#   pip install torch-sparse==0.6.18 torch-scatter==2.1.2 torch-geometric==2.6.1 \
+#       -f https://data.pyg.org/whl/torch-2.3.1+cu121.html   # match torch+CUDA
+#
+# IMPORTANT — install LYNX *editable* (`pip install -e .`). The published
+# `lynx` package is a thin shim that re-exports the repo's flat `models/` and
+# `util/` modules via a sys.path hook in lynx/__init__.py; a non-editable wheel
+# would omit those dirs and `import lynx` would fail. Editable keeps the source
+# checkout on disk so the shim resolves. (See README "Known limitation".)
+#
+# Dev shortcut: if this repo sits beside a liver3d checkout named IMS,
+#   pip install -e ../IMS
+# installs LYNX from that local checkout instead of cloning.
+# ============================================================================
+
+# Notebook tooling for running the reproducibility notebooks/percent-scripts.
+jupyterlab
+notebook
+jupytext
+
+# Everything else (numpy, scanpy, squidpy, torch, pyro, scFates runtime deps,
+# etc.) is declared by LYNX's pyproject.toml and installed by `pip install -e .`
+# above. Competitor-method benchmarks use their own per-method venvs — see
+# scripts/benchmarks/README.md.

@@ -1,0 +1,4 @@
+# Large notebooks (embedded rendered outputs) are stored via Git LFS.
+# NOTE: LFS-tracked notebooks do not render in the GitHub web preview;
+# clone + `git lfs pull` to view outputs locally.
+scripts/**/*.ipynb filter=lfs diff=lfs merge=lfs -text

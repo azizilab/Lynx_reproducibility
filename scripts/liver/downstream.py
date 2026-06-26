@@ -166,9 +166,9 @@ cluster_key = 'subtype'
 
 # %%
 # load saved adata w/ all parameters
-adata_xenium = sc.read_h5ad(RESULTS_DIR + '/liver/LYNX_xenium_6_0512.h5ad')
+adata_xenium = sc.read_h5ad(RESULTS_DIR + '/liver/LYNX_liver_xenium.h5ad')
 adata_desi.obsm['X_z'] = np.load(
-    RESULTS_DIR + '/liver/LYNX_desi_6_0512.npy'
+    RESULTS_DIR + '/liver/LYNX_liver_desi.npy'
 ).astype(np.float32)
 
 if 'cell_type' in adata_xenium.obs.keys():

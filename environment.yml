@@ -1,6 +1,6 @@
 # Conda environment for the LYNX reproducibility repo (preferred install track).
 # Identical to the LYNX package environment; the `pip install -e .` step below
-# must target a *pinned editable checkout* of azizilab/liver3d (commit 7090ff6)
+# must target a *pinned editable checkout* of azizilab/Lynx (commit 7090ff6)
 # so the `lynx` shim can resolve its models/ & util/ modules (see README).
 #
 #   conda env create -f environment.yml

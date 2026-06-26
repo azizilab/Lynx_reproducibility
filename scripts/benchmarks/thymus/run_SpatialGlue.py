@@ -28,7 +28,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO
@@ -61,7 +61,7 @@ model = Train_SpatialGlue(data, datatype=data_type, device=device)
 output = model.train()
 
 # %%
-adata_rna.obsm['SpatialGlue'] = np.load(RESULTS_DIR + '/thymus/SpatialGlue_embedding.npy')
+adata_rna.obsm['SpatialGlue'] = np.load(RESULTS_DIR + '/thymus/SpatialGlue_thymus_rna_embedding.npy')
 
 # %% 
 # Post-hoc clustering on latent embedding
@@ -84,7 +84,7 @@ sc.pl.spatial(
 )
 
 # %%
-# np.save(RESULTS_DIR + '/thymus/SpatialGlue_embedding.npy', output['SpatialGlue'])
-np.save(RESULTS_DIR + '/thymus/SpatialGlue_cluster.npy', adata_rna.obs['SpatialGlue'].values)
+# np.save(RESULTS_DIR + '/thymus/SpatialGlue_thymus_rna_embedding.npy', output['SpatialGlue'])
+np.save(RESULTS_DIR + '/thymus/SpatialGlue_thymus_rna_cluster.npy', adata_rna.obs['SpatialGlue'].values)
 
 

@@ -6,7 +6,7 @@ manuscript.
 This repo deliberately holds **only** the scripts, notebooks, and instructions. The LYNX
  model is installed from the pinned source [`azizilab/Lynx`](https://github.com/azizilab/Lynx) repo.
 
-## Layout
+## Structure
 
 ```
 .
@@ -21,11 +21,11 @@ This repo deliberately holds **only** the scripts, notebooks, and instructions. 
 ```
 
 Each application's `Benchmark.ipynb` (plus liver application's `run_Lynx_3D.ipynb`) includde brief instructions with a
-**"How to reproduce"** seciton listing the upstream scripts needed.
+**"How to reproduce"** section listing the upstream scripts needed.
 
 ## Setup
 
-LYNX and most benchmarking packages were implemented / tested **Python 3.9.5** (w/ exception from `spatialglue_env` built with **Python 3.8**). 
+LYNX and most benchmarking packages were implemented / tested **Python 3.9.5** (w/ exception from `spatialglue_env` with **Python 3.8**). 
 — see [scripts/benchmarks/README.md](scripts/benchmarks/README.md). Conda is the preferred
 track for the main env:
 
@@ -33,8 +33,8 @@ track for the main env:
 conda env create -f environment.yml && conda activate lynx
 
 # Install the pinned LYNX implementation (EDITABLE — see note below)
-git clone https://github.com/azizilab/liver3d.git
-cd liver3d && git checkout 7090ff6 && pip install -e . && cd ..
+git clone https://github.com/azizilab/Lynx.git
+cd Lynx && git checkout 7090ff6 && pip install -e . && cd ..
 pip install scFates==1.0.8 --no-deps                       # stale pins; out-of-resolver
 pip install torch-sparse==0.6.18 torch-scatter==2.1.2 torch-geometric==2.6.1 \
     -f https://data.pyg.org/whl/torch-2.3.1+cu121.html      # match torch + CUDA
@@ -45,18 +45,8 @@ git lfs install && git lfs pull
 
 `pip` fallback: see `requirements.txt`.
 
-> **Dev shortcut:** if a `liver3d` checkout sits beside this repo (e.g. `../IMS`),
+> **Dev shortcut:** if a `Lynx` checkout sits beside this repo (e.g. `../IMS`),
 > `pip install -e ../IMS` installs LYNX from it instead of cloning.
-
-### Known limitation — install LYNX *editable*
-
-The published `lynx` package is a thin shim: its submodules re-export the project's flat
-`models/` and `util/` code, made importable by a `sys.path` hook in `lynx/__init__.py`.
-Because `liver3d`'s `pyproject.toml` packages only `lynx/`, a non-editable
-`pip install "git+…/liver3d.git"` would install the shim **without** `models/`/`util/`
-and `import lynx` would fail. An **editable** install (`pip install -e .`) keeps the
-source checkout on disk, so the shim resolves. *(Upstream fix: add `models`/`util` to the
-poetry `packages` list, or fold them into `lynx/`.)*
 
 ## Reproduce
 
@@ -75,12 +65,11 @@ python downstream.py     # trajectory / zonation / CCI  -> figures/
 # then open Benchmark.ipynb for baseline comparison + figure compilation
 ```
 
-Each baseline method being benchmarked run in their own per-method venvs — see [scripts/benchmarks/README.md](scripts/benchmarks/README.md). **Coral is excluded** from
-this repo.
+Each baseline method being benchmarked run in their own per-method venvs — see [scripts/benchmarks/README.md](scripts/benchmarks/README.md).
 
 ## Paths
 
-Scripts/notebooks never hard-code relative paths; they import roots from `paths.py`:
+Scripts / notebooks don't save results with hard-coded relative paths; they import roots from `paths.py`:
 
 | Variable | Default | Override |
 |---|---|---|

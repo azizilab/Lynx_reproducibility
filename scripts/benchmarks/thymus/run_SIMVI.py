@@ -43,7 +43,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO, plot, trajectory
@@ -88,6 +88,6 @@ adata.obsm['simvi_s'] = model.get_latent_representation(edge_index, representati
 # %%
 # %%
 # Save model & latent variables
-model.save(RESULTS_DIR + "/thymus/simvi_model.pt")
-np.save(RESULTS_DIR + '/thymus/SIMVI_rna_z20.npy', adata.obsm['simvi_z'])
-np.save(RESULTS_DIR + '/thymus/SIMVI_rna_s20.npy', adata.obsm['simvi_s'])
+model.save(RESULTS_DIR + "/thymus/SIMVI_thymus_model.pt")
+np.save(RESULTS_DIR + '/thymus/SIMVI_thymus_rna_z.npy', adata.obsm['simvi_z'])
+np.save(RESULTS_DIR + '/thymus/SIMVI_thymus_rna_s.npy', adata.obsm['simvi_s'])

@@ -3,8 +3,8 @@
 # This repo holds the analysis scripts/notebooks only. The LYNX implementation
 # (model + util code) is pulled in by installing the pinned source checkout:
 #
-#   git clone https://github.com/azizilab/liver3d.git
-#   cd liver3d && git checkout 7090ff6           # pinned commit
+#   git clone https://github.com/azizilab/Lynx.git
+#   cd Lynx && git checkout 7090ff6           # pinned commit
 #   pip install -e .                             # EDITABLE install (see note)
 #   pip install scFates==1.0.8 --no-deps         # stale pins; install out of resolver
 #   pip install torch-sparse==0.6.18 torch-scatter==2.1.2 torch-geometric==2.6.1 \
@@ -16,7 +16,7 @@
 # would omit those dirs and `import lynx` would fail. Editable keeps the source
 # checkout on disk so the shim resolves. (See README "Known limitation".)
 #
-# Dev shortcut: if this repo sits beside a liver3d checkout named IMS,
+# Dev shortcut: if this repo sits beside a Lynx checkout named IMS,
 #   pip install -e ../IMS
 # installs LYNX from that local checkout instead of cloning.
 # ============================================================================

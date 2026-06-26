@@ -175,7 +175,7 @@ outdir = RESULTS_DIR + '/breast/'
 if not os.path.exists(outdir):
     os.makedirs(outdir, exist_ok=True)
 adata_xenium.obs = adata_xenium.obs.loc[:, [cluster_key]]
-# adata_xenium.write_h5ad(os.path.join(outdir, 'LYNX_xenium_cci.h5ad'))
-adata_xenium.write_h5ad(os.path.join(outdir, 'LYNX_xenium_cci2.h5ad'))
+# adata_xenium.write_h5ad(os.path.join(outdir, 'LYNX_breast_xenium_cci.h5ad'))
+adata_xenium.write_h5ad(os.path.join(outdir, 'LYNX_breast_xenium.h5ad'))
 
 # %%

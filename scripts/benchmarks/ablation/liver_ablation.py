@@ -46,7 +46,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO, plot, utils, trajectory
@@ -156,7 +156,7 @@ adata_xenium.obsm['X_z_abl1'] = adata_xenium.obsm['X_z'].copy()
 
 # %%
 # Save embeddings
-np.save(os.path.join(OUTDIR, 'SpatialVGAE_xenium_z.npy'), adata_xenium.obsm['X_z_abl1'])
+np.save(os.path.join(OUTDIR, 'SpatialVGAE_liver_xenium_z.npy'), adata_xenium.obsm['X_z_abl1'])
 
 # %%
 # ======================================================================
@@ -234,7 +234,7 @@ adata_xenium.obsm['X_z_abl2'] = adata_xenium.obsm['X_z'].copy()
 
 # %%
 # Save embeddings
-np.save(os.path.join(OUTDIR, 'RandomU_xenium_z.npy'), adata_xenium.obsm['X_z_abl2'])
+np.save(os.path.join(OUTDIR, 'RandomU_liver_xenium_z.npy'), adata_xenium.obsm['X_z_abl2'])
 
 # %%
 # Visualizations
@@ -282,7 +282,7 @@ plt.show()
 # %%
 # Benchmark against the ground-truth & full LYNX results
 adata_ab = sc.read_h5ad(RESULTS_DIR + '/liver/ab_validation.h5ad')
-adata_xenium.obs['t_lynx'] = np.load(RESULTS_DIR + f'/liver/LYNX_t_new.npy').astype(np.float32)
+adata_xenium.obs['t_lynx'] = np.load(RESULTS_DIR + f'/liver/LYNX_liver_pseudotime.npy').astype(np.float32)
 
 # %%
 # (1). scatter plot & spearman correlation

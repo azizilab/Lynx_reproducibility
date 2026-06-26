@@ -192,8 +192,8 @@ for sample_id in sample_ids:
     # ---------------------------
     #   Save h5ad individually
     # ---------------------------
-    adata_xenium.write_h5ad(os.path.join(outdir, f'LYNX_{sample_id}_xenium_wo_cci.h5ad'))
-    adata_desi.write_h5ad(os.path.join(outdir, f'LYNX_{sample_id}_desi_wo_cci.h5ad'))
+    adata_xenium.write_h5ad(os.path.join(outdir, f'LYNX_liver_{sample_id}_xenium_wo_cci.h5ad'))
+    adata_desi.write_h5ad(os.path.join(outdir, f'LYNX_liver_{sample_id}_desi_wo_cci.h5ad'))
 
     del adata_xenium, adata_desi, graph_data, model
     gc.collect()

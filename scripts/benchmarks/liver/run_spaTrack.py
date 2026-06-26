@@ -31,7 +31,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO, plot, trajectory

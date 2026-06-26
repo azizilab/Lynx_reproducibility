@@ -61,11 +61,11 @@ sample_ids = sorted([
 ])
 sample_id = sample_ids[0]
 adata_rna_raw = sc.read_h5ad(os.path.join(data_path, sample_id, 'adata_rna.h5'))
-adata_rna = sc.read_h5ad(RESULTS_DIR + '/thymus/lynx_rna_6_Mouse_Thymus1.h5ad')
+adata_rna = sc.read_h5ad(RESULTS_DIR + '/thymus/LYNX_thymus_rna.h5ad')
 adata_protein = sc.read_h5ad(os.path.join(data_path, sample_id, 'adata_protein.h5'))
 adata_protein.var_names_make_unique()
 
-# adata_rna.obsm['X_z'] = np.load(RESULTS_DIR + '/thymus/lynx_rna_{0}_{1}.npy'.format(n_latent, sample_id))
+# adata_rna.obsm['X_z'] = np.load(RESULTS_DIR + '/thymus/LYNX_thymus_rna.npy'.format(n_latent, sample_id))
 adata_protein.obsm['X_z'] = adata_rna.obsm['X_z'].copy()  # paired data, use the primary embedding
 
 # %%

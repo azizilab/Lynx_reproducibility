@@ -23,7 +23,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO
@@ -191,6 +191,6 @@ def run_gaston(adata, save_dir, num_dims=20, num_layers=3, return_new_adata=True
 # %%
 ndims = 20
 isodepth, seg = run_gaston(adata, save_dir=RESULTS_DIR + '/breast/gaston/', num_dims=ndims, num_layers=4, return_new_adata=False, use_gpu=True)
-np.save(RESULTS_DIR + '/breast/GASTON_xenium_isodepth.npy', isodepth)
-np.save(RESULTS_DIR + '/breast/GASTON_xenium_seg.npy', seg)
+np.save(RESULTS_DIR + '/breast/GASTON_breast_xenium_isodepth.npy', isodepth)
+np.save(RESULTS_DIR + '/breast/GASTON_breast_xenium_seg.npy', seg)
 # %%

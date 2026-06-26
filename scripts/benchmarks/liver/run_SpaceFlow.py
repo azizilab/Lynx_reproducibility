@@ -26,7 +26,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO
@@ -86,5 +86,5 @@ sq.pl.spatial_scatter(
 # Save pSM values
 with open(RESULTS_DIR + '/liver/runtime.txt', 'a') as f:
     f.write(f'SpaceFlow runtime (s): {t1-t0:.2f}\n')
-sf_obj.adata.obs[['pSM_spaceflow']].to_csv(RESULTS_DIR + '/liver/SpaceFlow_50_pseudotime.csv')
+sf_obj.adata.obs[['pSM_spaceflow']].to_csv(RESULTS_DIR + '/liver/SpaceFlow_liver_xenium_pseudotime.csv')
 

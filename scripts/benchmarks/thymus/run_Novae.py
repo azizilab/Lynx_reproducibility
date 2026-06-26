@@ -22,7 +22,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO
@@ -75,8 +75,8 @@ model.compute_representations(adata, accelerator="gpu")
 model.assign_domains(adata, level=4)
 latent = adata.obsm['novae_latent']
 clusters = adata.obs['novae_domains_4'].values
-np.save(RESULTS_DIR + '/thymus/Novae_xenium_latent.npy', latent)
-np.save(RESULTS_DIR + '/thymus/Novae_xenium_seg.npy', clusters)
+np.save(RESULTS_DIR + '/thymus/Novae_thymus_rna_latent.npy', latent)
+np.save(RESULTS_DIR + '/thymus/Novae_thymus_rna_seg.npy', clusters)
 
 # %%
 sc.pl.spatial(adata, color='novae_domains_4', size=100)

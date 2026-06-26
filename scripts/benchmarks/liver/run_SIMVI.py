@@ -39,7 +39,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO
@@ -92,18 +92,18 @@ adata.obsm['simvi_s'] = model.get_latent_representation(edge_index, representati
 # Save model & latent variables
 with open(os.path.join(RESULTS_DIR + "/liver/runtime.txt"), 'a') as f:
     f.write(f'SIMVI training time (s): {t1 - t0:.2f}\n')
-model.save(RESULTS_DIR + "/liver/simvi_model.pt")
-np.save(RESULTS_DIR + '/liver/SIMVI_xenium_z.npy', adata.obsm['simvi_z'])
-np.save(RESULTS_DIR + '/liver/SIMVI_xenium_s.npy', adata.obsm['simvi_s'])
+model.save(RESULTS_DIR + "/liver/SIMVI_liver_model.pt")
+np.save(RESULTS_DIR + '/liver/SIMVI_liver_xenium_z.npy', adata.obsm['simvi_z'])
+np.save(RESULTS_DIR + '/liver/SIMVI_liver_xenium_s.npy', adata.obsm['simvi_s'])
 # %%
 # # Load pretrained model
 model = SimVI(
     adata, kl_weight=1, kl_gatweight=0.01, lam_mi=1000, 
     permutation_rate=0.5, n_spatial=20, n_intrinsic=20
 )
-model.load(RESULTS_DIR + "/liver/simvi_model.pt")
-adata.obsm['simvi_z'] = np.load(RESULTS_DIR + '/liver/SIMVI_xenium_z.npy')
-adata.obsm['simvi_s'] = np.load(RESULTS_DIR + '/liver/SIMVI_xenium_s.npy')
+model.load(RESULTS_DIR + "/liver/SIMVI_liver_model.pt")
+adata.obsm['simvi_z'] = np.load(RESULTS_DIR + '/liver/SIMVI_liver_xenium_z.npy')
+adata.obsm['simvi_s'] = np.load(RESULTS_DIR + '/liver/SIMVI_liver_xenium_s.npy')
 
 # %%
 # Spatial effects with archetypes & Huber regression

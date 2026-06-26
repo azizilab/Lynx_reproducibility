@@ -126,8 +126,8 @@ outdir = RESULTS_DIR + '/liver/'
 if not os.path.exists(outdir):
     os.makedirs(outdir, exist_ok=True)
 
-np.save(os.path.join(outdir, 'LYNX_desi_6_0512_2.npy'), adata_desi.obsm['X_z'])
-adata_xenium.write_h5ad(os.path.join(outdir, 'LYNX_xenium_6_0512_2.h5ad'))
+np.save(os.path.join(outdir, 'LYNX_liver_desi.npy'), adata_desi.obsm['X_z'])
+adata_xenium.write_h5ad(os.path.join(outdir, 'LYNX_liver_xenium.h5ad'))
 
 # %%
 curve = trajectory.get_curve(adata_xenium, epg_lambda=0.01, trim_radius_ratio=0.5)

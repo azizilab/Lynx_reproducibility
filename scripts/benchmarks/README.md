@@ -6,8 +6,6 @@ traceability and are not re-run as part of this repo** — their outputs are
 already cached under `results/<app>/` and consumed by the `Benchmark.ipynb`
 notebooks in `scripts/<app>/`.
 
-> **Coral is intentionally excluded** from this reproducibility repo.
-
 ## How they run
 
 Each method needs its own environment (different, often conflicting, pins).
@@ -38,7 +36,7 @@ main LYNX env (`env/`, where `scvi-tools` is installed).
 | `run_SpatialMETA.py`              | `venvs/spatialmeta_env`| 3.9.5  | **no** — activate manually |
 | `run_scVIs.py`, `run_others.py`   | main `env/` (scvi-tools)| 3.9.5 | **no** — activate manually |
 | `run_spaTrack.py`                 | a `spaTrack` install    | 3.9.x | **no** — activate manually |
-| `ablation/*`                      | main LYNX env           | 3.9.5 | **no** |
+| `ablation/*`                      | main `env/`          | 3.9.5 | **no** |
 
 `run_benchmarks.sh` only auto-activates the five mapped patterns above; for the rest it
 runs in whatever environment is currently active, so activate the right one first (or add
@@ -56,7 +54,7 @@ template:
 python3.9 -m venv venvs/<name>
 source venvs/<name>/bin/activate
 pip install <method-package>            # per the method's upstream README
-# install LYNX too if the script imports IO/util:  pip install -e <liver3d>
+# install LYNX too if the script imports IO/util:  pip install -e <Lynx>
 deactivate
 ```
 
@@ -68,28 +66,13 @@ deactivate
 > pip install <SpatialGlue deps>
 > ```
 
-scVI / TotalVI (`run_scVIs.py`, `run_others.py`) do **not** use a `venvs/` env — they run
-in the main LYNX `env/`, where `scvi-tools` is installed alongside LYNX.
+**Note** scVI / TotalVI (`run_scVIs.py`, `run_others.py`) run in the main LYNX `env/`,
+where `scvi-tools` is installed alongside LYNX.
 
 ## Imports & paths (important)
 
-These scripts were authored to run from the original `liver3d` checkout under
+These scripts were authored to run from the original `Lynx` checkout under
 `benchmarks/<app>/`. Two consequences in this repo:
 
-- **Save/load paths were normalized** to the central `paths.py` roots
-  (`DATA_DIR`, `RESULTS_DIR`, `FIGURES_DIR`), so artifact locations are
-  consistent (e.g. all liver GASTON outputs now resolve under
-  `results/liver/`, fixing the original `../results/...` vs `../../results/...`
-  inconsistencies). A bootstrap block near the top of each script locates the
-  repo root and imports these.
-- **Competitor/`util` imports are left as-is.** `import IO` (and the
-  `sys.path.append('../../util/')` line) assume LYNX's `util/` is importable in
-  the active env — install LYNX (`pip install -e <liver3d>`) into the method
-  venv, or run from a `liver3d` checkout, before re-running.
+- **Save/load paths were normalized** to the central `paths.py` roots(`DATA_DIR`, `RESULTS_DIR`, `FIGURES_DIR`).
 
-## Outputs
-
-See [../../results/README.md](../../results/README.md) for the full
-artifact → producer map (e.g. `results/<app>/GASTON_*` ← `run_GASTON.py`,
-`results/<app>/Novae_*` ← `run_Novae.py`, `results/liver/SpatialMETA_embedding.npy`
-← `run_SpatialMETA.py`).

@@ -158,7 +158,7 @@ del adata_emb
 # (ii). Spatial trajectory
 # Load from results
 # n_latent = 6
-# adata_rna.obsm['X_z'] = np.load(RESULTS_DIR + '/thymus/lynx_rna_{0}_{1}.npy'.format(n_latent, sample_id))
+# adata_rna.obsm['X_z'] = np.load(RESULTS_DIR + '/thymus/LYNX_thymus_rna.npy'.format(n_latent, sample_id))
 # adata_protein.obsm['X_z'] = adata_rna.obsm['X_z'].copy()
 
 curve = trajectory.get_curve(adata_rna)
@@ -193,5 +193,5 @@ sq.pl.spatial_scatter(
 outdir = RESULTS_DIR + '/thymus/'
 if not os.path.exists(outdir):
     os.makedirs(outdir, exist_ok=True)
-# np.save(os.path.join(outdir, 'lynx_rna_6_{}_new.npy'.format(sample_id)), adata_rna.obsm['X_z'])
-adata_rna.write_h5ad(os.path.join(outdir, 'lynx_rna_6_{}.h5ad'.format(sample_id)))
+# np.save(os.path.join(outdir, 'LYNX_thymus_rna.npy'.format(sample_id)), adata_rna.obsm['X_z'])
+adata_rna.write_h5ad(os.path.join(outdir, 'LYNX_thymus_rna.h5ad'.format(sample_id)))

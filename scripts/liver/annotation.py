@@ -385,7 +385,7 @@ for target_id in sample_ids:
     if sample_id == target_id:
         continue
     print(f'Cell type transferring to sample {target_id}...')
-    adata_target = sc.read_h5ad(os.path.join(src_path, f'LYNX_{target_id}_xenium.h5ad'))
+    adata_target = sc.read_h5ad(os.path.join(src_path, f'LYNX_liver_{target_id}_xenium.h5ad'))
     adata_target = adata_target[:, adata.var_names]
     adata_target_norm = adata_target.copy()
 
@@ -407,7 +407,7 @@ for target_id in sample_ids:
     print('after:')
     print(adata_target.obs.subtype.value_counts())
     print('=========\n\n')
-    adata_target.write_h5ad(os.path.join(src_path, f'LYNX_{target_id}_xenium.h5ad'))
+    adata_target.write_h5ad(os.path.join(src_path, f'LYNX_liver_{target_id}_xenium.h5ad'))
 
 
 # %%
@@ -419,7 +419,7 @@ pp_markers = ['CYP2A7', 'CYP2B6']
 pc_markers = ['CYP3A4', 'APOA5']
 
 for sid in sample_ids:
-    src_file = os.path.join(src_path, f'LYNX_{sid}_xenium.h5ad')
+    src_file = os.path.join(src_path, f'LYNX_liver_{sid}_xenium.h5ad')
 
     adata_src = sc.read_h5ad(src_file)
     adata_tgt = adata_src.copy()
@@ -439,4 +439,4 @@ for sid in sample_ids:
     print(f'=== {sid} ===')
     print(adata_tgt.obs["subtype"].value_counts().to_string())
     print()
-    adata_tgt.write_h5ad(os.path.join(multimodal_path, f'LYNX_{sid}_xenium.h5ad'))
+    adata_tgt.write_h5ad(os.path.join(multimodal_path, f'LYNX_liver_{sid}_xenium.h5ad'))

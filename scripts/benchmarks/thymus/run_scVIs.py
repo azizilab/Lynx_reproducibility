@@ -45,7 +45,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 
@@ -90,10 +90,10 @@ model.train()
 # %%
 # Retrieve latent representation
 # latent = model.get_latent_representation()
-# np.save(RESULTS_DIR + '/thymus/scvi_10.npy', latent)
+# np.save(RESULTS_DIR + '/thymus/scVI_thymus_rna.npy', latent)
 # adata_rna.obsm['X_scvi'] = latent
 
-adata_rna.obsm['X_scvi'] = np.load(RESULTS_DIR + '/thymus/scvi_10.npy')
+adata_rna.obsm['X_scvi'] = np.load(RESULTS_DIR + '/thymus/scVI_thymus_rna.npy')
 
 # %%
 curve = trajectory.get_curve(adata_rna, use_rep='X_scvi')
@@ -156,10 +156,10 @@ model.train()
 # %%
 # Retrieve joint latent representation
 # adata_rna.obsm['X_totalvi'] = model.get_latent_representation()
-# np.save(RESULTS_DIR + '/thymus/totalvi_{}.npy'.format(adata_rna.obsm['X_totalvi'].shape[1]), adata_rna.obsm['X_totalvi'])
+# np.save(RESULTS_DIR + '/thymus/TotalVI_thymus_rna.npy'.format(adata_rna.obsm['X_totalvi'].shape[1]), adata_rna.obsm['X_totalvi'])
 
 n_latent = 20
-adata_rna.obsm['X_totalvi'] = np.load(RESULTS_DIR + '/thymus/totalvi_{}.npy'.format(n_latent))
+adata_rna.obsm['X_totalvi'] = np.load(RESULTS_DIR + '/thymus/TotalVI_thymus_rna.npy'.format(n_latent))
 
 # %%
 curve = trajectory.get_curve(adata_rna, use_rep='X_totalvi')

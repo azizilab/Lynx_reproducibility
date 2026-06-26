@@ -46,7 +46,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 
@@ -158,7 +158,7 @@ adata_rna.obsm['X_z_abl1'] = adata_rna.obsm['X_z'].copy()
 
 # %%
 # Save embeddings
-# np.save(os.path.join(OUTDIR, 'SpatialVGAE_rna_z.npy'), adata_rna.obsm['X_z_abl1'])
+# np.save(os.path.join(OUTDIR, 'SpatialVGAE_thymus_rna_z.npy'), adata_rna.obsm['X_z_abl1'])
 
 # %%
 # ======================================================================
@@ -230,7 +230,7 @@ adata_rna.obsm['X_z_abl2'] = adata_rna.obsm['X_z'].copy()
 
 # %%
 # Save embeddings
-# np.save(os.path.join(OUTDIR, 'RandomU_rna_z.npy'), adata_rna.obsm['X_z_abl2'])
+# np.save(os.path.join(OUTDIR, 'RandomU_thymus_rna_z.npy'), adata_rna.obsm['X_z_abl2'])
 
 # %%
 # Visualizations
@@ -262,7 +262,7 @@ t_cma = adata_rna.obs['CMA'].copy()
 adata_rna.obs['CMA'] = (t_cma - t_cma.min()) / (t_cma.max() - t_cma.min())
 
 n_latent = 6
-adata_rna.obsm['X_z'] = sc.read_h5ad(RESULTS_DIR + f'/thymus/lynx_rna_{n_latent}_{sample_id}.h5ad').obsm['X_z'].copy()
+adata_rna.obsm['X_z'] = sc.read_h5ad(RESULTS_DIR + f'/thymus/LYNX_thymus_rna.h5ad').obsm['X_z'].copy()
 curve = trajectory.get_curve(adata_rna, trim_radius_ratio=0.25)
 trajectory.compute_pseudotime(adata_rna, curve, root_marker='Dcn')
 adata_rna.obs['t_lynx'] = adata_rna.obs['t'].copy()

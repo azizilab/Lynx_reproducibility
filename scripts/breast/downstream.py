@@ -305,7 +305,7 @@ def test_cci_dynamic_differences(
 data_path = RESULTS_DIR + '/breast/'
 outdir = FIGURES_DIR + '/'
 cluster_key = 'cell_type'
-adata = sc.read_h5ad(os.path.join(data_path, 'LYNX_xenium_cci2.h5ad'))
+adata = sc.read_h5ad(os.path.join(data_path, 'LYNX_breast_xenium.h5ad'))
 
 # Unify cluster namings
 adata.obs[cluster_key] = adata.obs[cluster_key].astype('str')
@@ -632,7 +632,7 @@ gc.collect()
 
 # %%
 # Save adata w/ stromal state reassignment for future usage
-adata.write_h5ad(os.path.join(data_path, 'LYNX_xenium_cci2_stromal_states.h5ad'))
+adata.write_h5ad(os.path.join(data_path, 'LYNX_breast_xenium_stromal_states.h5ad'))
 
 
 # %% [markdown]

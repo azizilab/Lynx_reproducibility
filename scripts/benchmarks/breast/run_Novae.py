@@ -24,7 +24,7 @@ while _d != _os.path.dirname(_d) and not _os.path.exists(_os.path.join(_d, "path
 if _d not in _sys.path:
     _sys.path.insert(0, _d)
 from paths import DATA_DIR, RESULTS_DIR, FIGURES_DIR, FINAL_FIGURES_DIR
-# NOTE: competitor imports below assume the original liver3d checkout layout /
+# NOTE: competitor imports below assume the original Lynx checkout layout /
 # the method's venv (see benchmarks/README.md); not re-run in this repo.
 # -----------------------------------------------------------------------------
 import IO
@@ -80,8 +80,8 @@ model = novae.Novae.from_pretrained("MICS-Lab/novae-human-0")
 # model.assign_domains(adata, level=5)
 # latent = adata.obsm['novae_latent']
 # clusters = adata.obs['novae_domains_5'].values
-# np.save(RESULTS_DIR + '/liver/Novae_xenium_zero_shot_latent.npy', latent)
-# np.save(RESULTS_DIR + '/liver/Novae_xenium_zero_shot_seg.npy', clusters)
+# np.save(RESULTS_DIR + '/breast/Novae_breast_xenium_zero_shot_latent.npy', latent)
+# np.save(RESULTS_DIR + '/breast/Novae_breast_xenium_zero_shot_seg.npy', clusters)
 
 
 # %%
@@ -89,7 +89,7 @@ model = novae.Novae.from_pretrained("MICS-Lab/novae-human-0")
 model.fine_tune(adata, accelerator="gpu")
 model.compute_representations(adata, accelerator="gpu")
 latent = adata.obsm['novae_latent']
-np.save(RESULTS_DIR + '/breast/Novae_xenium_latent.npy', latent)
+np.save(RESULTS_DIR + '/breast/Novae_breast_xenium_latent.npy', latent)
 
 # %%
 # Check latent manifold

@@ -20,7 +20,7 @@ This repo deliberately holds **only** the scripts, notebooks, and instructions. 
     └── benchmarks/                  # competitor methods — see scripts/benchmarks/README.md
 ```
 
-Each application's `Benchmark.ipynb` (plus liver application's `run_Lynx_3D.ipynb`) includde brief instructions with a
+Each application's `Benchmark.ipynb` (plus `run_Lynx_3D.ipynb` under the liver application) include brief instructions with a
 **"How to reproduce"** section listing the upstream scripts needed.
 
 ## Setup

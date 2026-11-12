@@ -49,6 +49,8 @@ from importlib import reload
 
 # %%
 # Hyperparameters
+version = 'revised'  # 'original': the published model & interaction test
+seed = 0
 n_subgraphs = 16
 n_hidden = 32
 n_latent = 6
@@ -62,6 +64,7 @@ xenium_path = DATA_DIR + '/xenium/'
 desi_path = DATA_DIR + '/desi/'
 sample_id = 'NIH_F5_proseg'
 
+pyro.set_rng_seed(seed)
 adata_xenium = IO.load_xenium(os.path.join(xenium_path, sample_id), load_img=False)
 adata_desi = sc.read_h5ad(os.path.join(desi_path, sample_id+'.h5'))
 adata_xenium, adata_desi = IO.filter_cells(adata_xenium, adata_desi, by='map')
@@ -88,7 +91,8 @@ model_configs = configs.set_model_configs(
     c_hidden=n_hidden, 
     c_latent=n_latent,
     act=nn.SiLU(),
-    infer_cell_interaction=True
+    infer_cell_interaction=True,
+    version=version
 )
 
 # %%
@@ -162,6 +166,7 @@ plot.disp_trajectory(
 
 # %%
 if adata_xenium.X.toarray()[adata_xenium.X.toarray() > 0].min() == 1.0:
+    adata_xenium.layers['counts'] = adata_xenium.X.copy()  # The interaction test reads the counts
     sc.pp.normalize_total(adata_xenium)
     sc.pp.log1p(adata_xenium)
 
@@ -187,18 +192,14 @@ plot.disp_joint_logfc(
 
 
 # %%
-cci_df = plot.summarize_cell_interaction(
-    adata_xenium, 
-    cluster_key=cluster_key, 
-    cluster_labels=cluster_labels,
-    title='Summary of cell-cell interaction (Overall)\n w/o abundance-test',
-    show_plot=False
-)
-
+# Interaction strength of the significant pairs & their significance, by the test of the model version
+# (revised: the C x C level of every interaction test)
+tests = test_assoc.get_test_interactions(adata_xenium, cluster_key=cluster_key) if version == 'revised' else None
 cci_df, pval_df = test_assoc.test_cci(
-    adata_xenium, cci_df, 
+    adata_xenium, 
     cluster_key=cluster_key,
-    cluster_labels=cluster_labels    
+    cluster_labels=cluster_labels,
+    tests=tests
 )
 
 plot.disp_heatmap(
@@ -206,18 +207,15 @@ plot.disp_heatmap(
     title='Summary of cell-cell interaction (Overall)\n -log10(p-val)',
 )
 
+# Revised model: which genes of the receivers change (C x C x G), dotted where they could be other types' transcripts
+if version == 'revised':
+    plot.disp_interaction_strength(tests['cxcxg'], mask=test_assoc.cxcxg_mask(adata_xenium, cluster_key))
+
 # %%
 for cluster_id in sorted(adata_xenium.obs['zone'].unique()):
     adata_sub = adata_xenium[adata_xenium.obs['zone'] == cluster_id].copy()
-    zone_cci_df = plot.summarize_cell_interaction(
-        adata_sub, 
-        cluster_key=cluster_key,
-        cluster_labels=cluster_labels,
-        show_plot=False
-    )
-    
     zone_cci_df, zone_pval_df = test_assoc.test_cci(
-        adata_sub, zone_cci_df, 
+        adata_sub, 
         cluster_key=cluster_key,
         cluster_labels=cluster_labels,
     )

@@ -25,7 +25,8 @@ primary LYNX result per application is the bare `LYNX_<tissue>_<sampletype>` fil
 |---|---|
 | `results/breast/LYNX_breast_xenium.h5ad` (+ `_cci`, `_stromal_states`) | `scripts/breast/run_Lynx.py` |
 | `results/liver/LYNX_liver_xenium.h5ad`, `LYNX_liver_desi.npy`, `LYNX_liver_pseudotime.npy` | `scripts/liver/run_Lynx.py` |
-| `results/liver_3d/LYNX_liver_{SAMPLE_ID}_{section}_{xenium,desi}.h5ad` | `scripts/liver/run_Lynx_3D.ipynb` |
+| `results/liver_3d/LYNX_liver_{SAMPLE_ID}_{section}_{xenium,desi}.h5ad` (joint run; `_seedN`: replicate runs, `_sectionwise`, `_heldout`: section-wise and held-out runs), `LYNX_liver_{SAMPLE_ID}_{neighbour_counts,joint_vs_sectionwise}.csv` | `scripts/liver/run_Lynx_3D.ipynb` |
+| `results/liver_3d/LYNX_liver_{SAMPLE_ID}_{registration_error,slice_registration}.csv` | `scripts/liver/alignment_3D.ipynb` |
 | `results/thymus/LYNX_thymus_rna.h5ad`, `LYNX_thymus_rna.npy` | `scripts/thymus/run_Lynx.py` |
 | `results/liver/ab_validation.h5ad` (antibody ground truth) | `scripts/liver/simulate_gradient.py` |
 

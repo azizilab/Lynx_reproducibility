@@ -22,6 +22,11 @@ data/
 │       ├── he.tif / he_hires.tif      # cropped H&E
 │       └── he_patches_norm.h5ad       # normalized H&E patches
 │
+├── LYNX_liver_dataset/                # the data release (Zenodo 10.5281/zenodo.21110855, data.zip unpacked here)
+│   ├── NIH_F5_2D/                     #   xenium/cell_feature_matrix.h5, DESI/NIH_F5.{h5,ome.tif}
+│   └── NIH_F5_3D/                     #   xenium/section_XX/sdata.zarr, DESI/section_XX_sdata.zarr (aligned coordinates,
+│                                      #   desi_map / xenium_map, cell types, landmarks); read by scripts/liver/run_Lynx_3D.ipynb
+│
 ├── xenium/                            # liver Xenium (per-sample subdirs:
 │   └── <sample_id>/                   #   morphology_focus/, morphology_mip.ome.tif, reseg_masks.npy)
 ├── desi/                              # liver DESI (metabolomics)
